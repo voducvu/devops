@@ -1,7 +1,7 @@
 
 # Create IAM role for S3 access
-resource "aws_iam_role" "s3_full_access_role" {
-  name = "s3-app-storage-full-access-role"
+resource "aws_iam_role" "my_bucket_full_access_role" {
+  name = "s3-${var.bucket_name}-full-access-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -18,8 +18,8 @@ resource "aws_iam_role" "s3_full_access_role" {
 }
 
 # # Create IAM policy for full S3 bucket access
-resource "aws_iam_policy" "s3_full_access_policy" {
-  name = "s3-app-storage-full-access-policy"
+resource "aws_iam_policy" "my_bucket_access_policy" {
+  name = "s3-${var.bucket_name}-full-access-policy"
 
   policy = jsonencode({
     Version = "2012-10-17"
@@ -34,7 +34,6 @@ resource "aws_iam_policy" "s3_full_access_policy" {
         ]
         Resource = [
             aws_s3_bucket.my_bucket.arn
-            # "${aws_s3_bucket.app_storage.arn}/*"
         ]
       }
     ]
@@ -42,7 +41,7 @@ resource "aws_iam_policy" "s3_full_access_policy" {
 }
 
 # # Attach policy to role
-resource "aws_iam_role_policy_attachment" "s3_full_access_attachment" {
-  role       = aws_iam_role.s3_full_access_role.name
-  policy_arn = aws_iam_policy.s3_full_access_policy.arn
+resource "aws_iam_role_policy_attachment" "my_bucketfull_access_attachment" {
+  role       = aws_iam_role.my_bucket_full_access_role.name
+  policy_arn = aws_iam_policy.my_bucket_access_policy.arn
 }

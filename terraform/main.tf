@@ -4,12 +4,9 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 6.0"
     }
+    newrelic = {
+      source  = "newrelic/newrelic"
+      version = "~> 2.44"  # Update this line
+    }
   }
 }
-
-# Configure the AWS Provider
-provider "aws" {
-  region = "ap-southeast-1"
-  shared_credentials_files = ["~/.aws/credentials"]
-}
-
